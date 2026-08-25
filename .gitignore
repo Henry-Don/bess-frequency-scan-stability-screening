@@ -1,0 +1,9 @@
+# MATLAB generated files and local run artifacts
+work/
+**/slprj/
+*.slxc
+*.asv
+*.autosave
+*.m~
+results/*.mat
+results/*.png
