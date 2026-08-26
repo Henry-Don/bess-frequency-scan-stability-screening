@@ -4,6 +4,7 @@ projectRoot = fileparts(fileparts(mfilename('fullpath')));
 addpath(fullfile(projectRoot, 'scripts'));
 addpath(fullfile(projectRoot, 'models'));
 run(fullfile(projectRoot, 'scripts', 'init_frequency_scan.m'));
+demoTiming = frequency_scan_timing(scan_cfg, scan_cfg.test_frequency_Hz);
 
 resultsFolder = fullfile(projectRoot, 'results');
 if ~isfolder(resultsFolder)
@@ -17,8 +18,10 @@ qAxisOut = sim(make_frequency_scan_input('q', scan_cfg.test_frequency_Hz, true))
 phase1_result = struct();
 phase1_result.configuration = scan_cfg;
 phase1_result.baseline = extract_pcc_dq_signals(baselineOut);
-phase1_result.d_axis = extract_pcc_dq_signals(dAxisOut);
-phase1_result.q_axis = extract_pcc_dq_signals(qAxisOut);
+phase1_result.d_axis = extract_pcc_dq_signals(dAxisOut, ...
+    phase1_result.baseline.time_s, phase1_result.baseline.reference_angle_rad);
+phase1_result.q_axis = extract_pcc_dq_signals(qAxisOut, ...
+    phase1_result.baseline.time_s, phase1_result.baseline.reference_angle_rad);
 
 % The 50 Hz fundamental is present in every dq waveform.  Identify the
 % injected response relative to the perturbation-disabled baseline instead
@@ -30,8 +33,8 @@ phase1_result.q_axis.delta_vq_V = phase1_result.q_axis.vq_V - interp1( ...
     phase1_result.baseline.time_s, phase1_result.baseline.vq_V, ...
     phase1_result.q_axis.time_s, 'linear', 'extrap');
 
-window = phase1_result.d_axis.time_s >= scan_cfg.enable_time_s & ...
-    phase1_result.d_axis.time_s <= scan_cfg.disable_time_s;
+window = phase1_result.d_axis.time_s >= demoTiming.enable_time_s & ...
+    phase1_result.d_axis.time_s <= demoTiming.disable_time_s;
 phase1_result.summary = struct();
 phase1_result.summary.d_axis_delta_vd_peak_to_peak_V = ...
     peak2peak(phase1_result.d_axis.delta_vd_V(window));
