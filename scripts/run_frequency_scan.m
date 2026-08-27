@@ -1,4 +1,4 @@
-function scanResult = run_frequency_scan(frequenciesHz, resultFile)
+function scanResult = run_frequency_scan(frequenciesHz, resultFile, caseConfig)
 %RUN_FREQUENCY_SCAN Execute resumable d/q sinusoidal frequency scans.
 
 projectRoot = fileparts(fileparts(mfilename('fullpath')));
@@ -8,6 +8,10 @@ initializationFile = fullfile(projectRoot, 'scripts', 'init_frequency_scan.m');
 evalin('base', ['run(''' strrep(initializationFile, '''', '''''') ''')']);
 scan_cfg = evalin('base', 'scan_cfg');
 frequency_scan_model = evalin('base', 'frequency_scan_model');
+
+if nargin >= 3 && ~isempty(caseConfig)
+    scan_cfg = applyCaseConfiguration(scan_cfg, caseConfig);
+end
 
 if nargin < 1 || isempty(frequenciesHz)
     frequenciesHz = scan_cfg.frequencies_Hz;
@@ -80,7 +84,10 @@ end
 scanResult.completed_utc = char(datetime('now','TimeZone','UTC', ...
     'Format','yyyy-MM-dd''T''HH:mm:ss''Z'''));
 save(resultFile, 'scanResult');
-plot_frequency_scan_admittance(scanResult, resultsFolder);
+if nargin < 3 || ~isfield(caseConfig, 'create_admittance_plot') || ...
+        caseConfig.create_admittance_plot
+    plot_frequency_scan_admittance(scanResult, resultsFolder);
+end
 fprintf('FREQUENCY SCAN COMPLETE | %d frequencies | %d injection runs\n', ...
     numel(frequenciesHz), 2*numel(frequenciesHz));
 end
@@ -88,7 +95,10 @@ end
 function scanResult = initializeOrResume(resultFile, frequenciesHz, scanCfg)
 if isfile(resultFile)
     saved = load(resultFile, 'scanResult');
-    if isequal(saved.scanResult.frequency_Hz, frequenciesHz)
+    expectedSignature = caseSignature(scanCfg);
+    if isequal(saved.scanResult.frequency_Hz, frequenciesHz) && ...
+            isfield(saved.scanResult, 'case_signature') && ...
+            strcmp(saved.scanResult.case_signature, expectedSignature)
         scanResult = saved.scanResult;
         return
     end
@@ -107,6 +117,37 @@ scanResult.maximum_soc_pu = nan(1,n);
 scanResult.measured_cycles = nan(1,n);
 scanResult.completed = false(1,n);
 scanResult.configuration = scanCfg;
+scanResult.case_signature = caseSignature(scanCfg);
 scanResult.last_completed_frequency_Hz = nan;
 scanResult.completed_utc = '';
+end
+
+function scanCfg = applyCaseConfiguration(scanCfg, caseConfig)
+if ~isstruct(caseConfig) || ~isscalar(caseConfig)
+    error('FrequencyScan:CaseConfiguration', ...
+        'caseConfig must be a scalar structure.');
+end
+if isfield(caseConfig, 'scr')
+    validateattributes(caseConfig.scr, {'numeric'}, ...
+        {'real','finite','positive','scalar'}, mfilename, 'caseConfig.scr');
+    scanCfg.scr = double(caseConfig.scr);
+    scanCfg.grid_short_circuit_power_VA = ...
+        scanCfg.scr*scanCfg.converter_base_power_VA;
+end
+if isfield(caseConfig, 'pll_scale')
+    validateattributes(caseConfig.pll_scale, {'numeric'}, ...
+        {'real','finite','positive','scalar'}, mfilename, ...
+        'caseConfig.pll_scale');
+    scanCfg.pll_scale = double(caseConfig.pll_scale);
+    control = scanCfg.controller_configuration;
+    control.pllKp = control.pllKp*scanCfg.pll_scale;
+    control.pllKi = control.pllKi*scanCfg.pll_scale;
+    scanCfg.controller_configuration = control;
+end
+end
+
+function value = caseSignature(scanCfg)
+value = sprintf('SCR=%.12g|PLL=%.12g|SBASE=%.12g|XR=%.12g', ...
+    scanCfg.scr, scanCfg.pll_scale, scanCfg.converter_base_power_VA, ...
+    scanCfg.grid_xr_ratio);
 end

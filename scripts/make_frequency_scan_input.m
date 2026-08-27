@@ -38,6 +38,15 @@ in = in.setVariable('P_ref_final_W', scanCfg.nominal_active_power_W);
 in = in.setVariable('Q_ref_initial_var', scanCfg.nominal_reactive_power_var);
 in = in.setVariable('Q_ref_final_var', scanCfg.nominal_reactive_power_var);
 in = in.setVariable('case_step_time_s', timing.enable_time_s);
+if isfield(scanCfg, 'grid_short_circuit_power_VA')
+    in = in.setVariable('S_sc_grid_VA', scanCfg.grid_short_circuit_power_VA);
+end
+if isfield(scanCfg, 'grid_xr_ratio')
+    in = in.setVariable('X_R_grid', scanCfg.grid_xr_ratio);
+end
+if isfield(scanCfg, 'controller_configuration')
+    in = in.setVariable('ctrl_cfg', scanCfg.controller_configuration);
+end
 
 sourceBlock = scanCfg.pcc_source_block;
 if ~enabled || strcmp(axisName, 'off')

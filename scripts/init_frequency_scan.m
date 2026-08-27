@@ -20,6 +20,19 @@ scan_cfg.discard_cycles = 1;
 scan_cfg.post_injection_s = 0.05;
 scan_cfg.maximum_voltage_matrix_condition = 1e4;
 scan_cfg.pcc_source_block = [frequency_scan_model '/Grid_11kV'];
+scan_cfg.converter_base_power_VA = P_rated_W;
+scan_cfg.grid_xr_ratio = X_R_grid;
+scan_cfg.grid_short_circuit_power_VA = S_sc_grid_VA;
+scan_cfg.scr = S_sc_grid_VA/P_rated_W;
+scan_cfg.pll_scale = 1.0;
+scan_cfg.controller_configuration = ctrl_cfg;
+
+% The interaction-gain thresholds are fixed for every SCR case.  The
+% metric is max(svd(Zgrid*Ybess)); values below one satisfy the small-gain
+% screening condition.  The middle band highlights cases approaching it.
+scan_cfg.interaction_thresholds = struct( ...
+    'moderate', 0.5, ...
+    'higher', 1.0);
 
 % A d-axis test uses a line-voltage magnitude modulation.  A q-axis test
 % uses an equivalent small phase modulation.  Both are intentionally small
