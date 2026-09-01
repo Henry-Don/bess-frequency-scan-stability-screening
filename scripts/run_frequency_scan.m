@@ -65,11 +65,22 @@ for k = 1:numel(frequenciesHz)
     clear out
 
     point = identify_dq_admittance(baseline, dAxis, qAxis, frequencyHz, timing);
+    fitQuality = assess_frequency_scan_fit_quality(point, ...
+        scan_cfg.fit_quality_thresholds);
     scanResult.Y_dq_S(:,:,k) = point.Y_dq_S;
     scanResult.voltage_phasor_V(:,:,k) = point.voltage_phasor_V;
     scanResult.current_phasor_A(:,:,k) = point.current_phasor_A;
     scanResult.voltage_matrix_condition(k) = point.voltage_matrix_condition;
     scanResult.maximum_fit_residual(k) = max(point.relative_fit_residual, [], 'all');
+    scanResult.maximum_main_voltage_fit_residual(k) = ...
+        fitQuality.maximum_main_voltage_relative_residual;
+    scanResult.maximum_current_weighted_fit_residual(k) = ...
+        fitQuality.maximum_current_matrix_weighted_residual;
+    scanResult.raw_maximum_current_fit_residual(k) = ...
+        fitQuality.raw_maximum_current_relative_residual;
+    scanResult.maximum_cross_voltage_leakage_ratio(k) = ...
+        fitQuality.maximum_cross_voltage_leakage_ratio;
+    scanResult.fit_quality_passed(k) = fitQuality.passed;
     scanResult.maximum_fault_state(k) = point.maximum_fault_state;
     scanResult.minimum_soc_pu(k) = point.minimum_soc_pu;
     scanResult.maximum_soc_pu(k) = point.maximum_soc_pu;
@@ -77,8 +88,15 @@ for k = 1:numel(frequenciesHz)
     scanResult.completed(k) = true;
     scanResult.last_completed_frequency_Hz = frequencyHz;
     save(resultFile, 'scanResult');
-    fprintf('  complete | cond(V)=%.3g | max fit residual=%.3g\n', ...
-        point.voltage_matrix_condition, scanResult.maximum_fit_residual(k));
+    fprintf(['  complete | cond(V)=%.3g | main V residual=%.3g | ' ...
+        'weighted current residual=%.3g | raw current residual=%.3g | ' ...
+        'cross leakage=%.3g | quality=%d\n'], ...
+        point.voltage_matrix_condition, ...
+        scanResult.maximum_main_voltage_fit_residual(k), ...
+        scanResult.maximum_current_weighted_fit_residual(k), ...
+        scanResult.raw_maximum_current_fit_residual(k), ...
+        scanResult.maximum_cross_voltage_leakage_ratio(k), ...
+        scanResult.fit_quality_passed(k));
 end
 
 scanResult.completed_utc = char(datetime('now','TimeZone','UTC', ...
@@ -95,7 +113,7 @@ end
 function scanResult = initializeOrResume(resultFile, frequenciesHz, scanCfg)
 if isfile(resultFile)
     saved = load(resultFile, 'scanResult');
-    expectedSignature = caseSignature(scanCfg);
+    expectedSignature = frequency_scan_case_signature(scanCfg);
     if isequal(saved.scanResult.frequency_Hz, frequenciesHz) && ...
             isfield(saved.scanResult, 'case_signature') && ...
             strcmp(saved.scanResult.case_signature, expectedSignature)
@@ -111,13 +129,18 @@ scanResult.voltage_phasor_V = complex(nan(2,2,n));
 scanResult.current_phasor_A = complex(nan(2,2,n));
 scanResult.voltage_matrix_condition = nan(1,n);
 scanResult.maximum_fit_residual = nan(1,n);
+scanResult.maximum_main_voltage_fit_residual = nan(1,n);
+scanResult.maximum_current_weighted_fit_residual = nan(1,n);
+scanResult.raw_maximum_current_fit_residual = nan(1,n);
+scanResult.maximum_cross_voltage_leakage_ratio = nan(1,n);
+scanResult.fit_quality_passed = false(1,n);
 scanResult.maximum_fault_state = nan(1,n);
 scanResult.minimum_soc_pu = nan(1,n);
 scanResult.maximum_soc_pu = nan(1,n);
 scanResult.measured_cycles = nan(1,n);
 scanResult.completed = false(1,n);
 scanResult.configuration = scanCfg;
-scanResult.case_signature = caseSignature(scanCfg);
+scanResult.case_signature = frequency_scan_case_signature(scanCfg);
 scanResult.last_completed_frequency_Hz = nan;
 scanResult.completed_utc = '';
 end
@@ -144,10 +167,4 @@ if isfield(caseConfig, 'pll_scale')
     control.pllKi = control.pllKi*scanCfg.pll_scale;
     scanCfg.controller_configuration = control;
 end
-end
-
-function value = caseSignature(scanCfg)
-value = sprintf('SCR=%.12g|PLL=%.12g|SBASE=%.12g|XR=%.12g', ...
-    scanCfg.scr, scanCfg.pll_scale, scanCfg.converter_base_power_VA, ...
-    scanCfg.grid_xr_ratio);
 end

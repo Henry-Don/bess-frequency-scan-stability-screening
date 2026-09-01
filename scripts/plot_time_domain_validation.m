@@ -88,6 +88,7 @@ grid on;
 end
 
 function value = caseLegend(item)
-value = sprintf('%s | SCR %g, PLL %.3g | %s', item.label, ...
-    item.scr, item.pll_scale, item.frequency_risk_level);
+value = sprintf('%s | SCR %g, PLL %.3g\nExpected %s; actual %s', ...
+    item.label, item.scr, item.pll_scale, ...
+    item.expected_frequency_risk_level, item.frequency_risk_level);
 end

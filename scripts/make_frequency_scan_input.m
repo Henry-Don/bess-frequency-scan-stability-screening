@@ -49,14 +49,13 @@ if isfield(scanCfg, 'controller_configuration')
 end
 
 sourceBlock = scanCfg.pcc_source_block;
-if ~enabled || strcmp(axisName, 'off')
-    return
-end
-
 in = in.setBlockParameter(sourceBlock, ...
     'magnitude_type', 'ee.enum.timechanging.constant');
 in = in.setBlockParameter(sourceBlock, ...
     'phase_type', 'ee.enum.timechanging.constant');
+if ~enabled || strcmp(axisName, 'off')
+    return
+end
 
 switch axisName
     case 'd'
