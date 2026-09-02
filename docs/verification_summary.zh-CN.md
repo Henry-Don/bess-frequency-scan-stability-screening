@@ -1,4 +1,6 @@
-# 验证结论
+# 验证摘要
+
+[English](verification_summary.md) | **简体中文**
 
 ## 1. 目的与范围
 

@@ -2,8 +2,15 @@
 work/
 **/slprj/
 *.slxc
+*.mex*
+codegen/
 *.asv
 *.autosave
 *.m~
 results/*.mat
 results/*.png
+
+# Local validation and release artifacts
+python/__pycache__/
+qa/
+dist/

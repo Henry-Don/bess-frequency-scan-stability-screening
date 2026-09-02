@@ -1,4 +1,6 @@
-# Validation Findings
+# Verification Summary
+
+**English** | [简体中文](verification_summary.zh-CN.md)
 
 ## 1. Purpose and scope
 

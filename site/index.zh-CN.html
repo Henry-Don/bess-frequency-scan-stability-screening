@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BESS 频率扫描与弱电网筛查</title>
+  <meta name="description" content="基于 MATLAB 与 Simulink 的跟网型 BESS 自动 dq 导纳辨识与弱电网稳定风险筛查。">
+  <meta property="og:title" content="BESS 频率扫描与弱电网筛查">
+  <meta property="og:description" content="可重复的 20 点 dq 扫频、4 x 4 SCR-PLL 风险地图和时域交叉检查。">
+  <meta property="og:image" content="docs/images/pll_scr_risk_map.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="container nav" aria-label="主导航">
+      <a class="brand" href="index.zh-CN.html">BESS 频率扫描</a>
+      <div class="nav-links">
+        <a href="#reports">报告</a>
+        <a href="#models">模型</a>
+        <a href="https://github.com/Henry-Don/bess-frequency-scan-stability-screening">源码</a>
+        <a class="language" href="index.html">English</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">MATLAB · Simulink · 弱电网筛查</p>
+        <h1 class="hero-title-zh">BESS dq 扫频与弱电网风险筛查</h1>
+        <p class="lead">可审查的跟网型 BESS 研究：将可重复端口扰动转化为完整 dq 导纳、SCR-PLL 交互地图、质量证据和时域交叉检查。</p>
+        <div class="actions">
+          <a class="button primary" href="docs/project_technical_guide.zh-CN.pdf">打开技术说明</a>
+          <a class="button" href="docs/verification_summary.zh-CN.md">查看验证摘要</a>
+          <a class="button" href="https://github.com/Henry-Don/bess-frequency-scan-stability-screening">查看仓库</a>
+        </div>
+        <div class="stats" aria-label="项目摘要">
+          <div class="stat"><strong>0.5–100 Hz</strong><span>频率范围</span></div>
+          <div class="stat"><strong>20</strong><span>对数间隔频点</span></div>
+          <div class="stat"><strong>4 x 4</strong><span>SCR-PLL 运行矩阵</span></div>
+          <div class="stat"><strong>7 / 7</strong><span>本地检查组通过</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="architecture">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">系统架构</p>
+          <h2>一个经过验证的 BESS 被控对象，一条可重复辨识链路</h2>
+          <p>原有功率与控制系统保持不变；扫频层统一协调基准、d 轴和 q 轴运行、复相量提取与交互评分。</p>
+        </div>
+        <div class="media-frame">
+          <img src="docs/system_architecture.svg" alt="并网 BESS 与自动频率扫描架构">
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">主要研究结果</p>
+          <h2>一张图对比电网强度与 PLL 灵敏度</h2>
+          <p>矩阵为每个运行点保留实际计算的风险分数和关键交互频率。</p>
+        </div>
+        <div class="demo-grid">
+          <div class="media-frame">
+            <img src="docs/images/pll_scr_risk_map.png" alt="包含关键频率的 SCR 与 PLL 相对风险地图">
+          </div>
+          <aside class="demo-copy">
+            <h3>包含证据</h3>
+            <ul>
+              <li>0.5 Hz 至 100 Hz 的 20 个频点</li>
+              <li>独立 d 轴和 q 轴注入</li>
+              <li>完整 2 x 2 dq 导纳</li>
+              <li>四档 SCR 和四档 PLL 参数</li>
+              <li>拟合、重复性和基准检查</li>
+            </ul>
+            <a class="text-link" href="docs/images/dq_admittance_response.png">打开 dq 响应图 →</a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="reports" id="reports">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">公开证据</p>
+          <h2>技术说明与验证摘要相互独立</h2>
+          <p>技术说明解释方法和结果；验证摘要记录验收门槛、重复性以及模型等效性。</p>
+        </div>
+        <div class="report-grid">
+          <article class="report-card">
+            <h3>频率扫描技术说明</h3>
+            <p>研究边界、扰动方法、dq 辨识、电网指标、风险矩阵、时域解释和局限。</p>
+            <div class="report-meta"><span class="tag">8 页</span><span class="tag">20 个频点</span><span class="tag">16 个工况</span></div>
+            <a class="text-link" href="docs/project_technical_guide.zh-CN.pdf">打开技术说明 →</a>
+          </article>
+          <article class="report-card fast">
+            <h3>验证摘要</h3>
+            <p>正式拟合质量门槛、独立 10 Hz 重复性、九路信号基准等效和保留的差异。</p>
+            <div class="report-meta"><span class="tag">7/7 检查</span><span class="tag">重复漂移 0%</span><span class="tag">9 路信号</span></div>
+            <a class="text-link" href="docs/verification_summary.zh-CN.md">查看验证摘要 →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="models">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">已保存 Simulink 模型</p>
+          <h2>可审查的实现和实际记录响应</h2>
+          <p>模型视图来自已保存的 `.slx` 文件，验证图来自已完成的三个时域工况。</p>
+        </div>
+        <div class="model-grid">
+          <article class="model-card">
+            <img src="docs/images/model_frequency_scan.png" alt="Simulink 频率扫描顶层模型">
+            <p>顶层模型保留完整物理 BESS，并暴露受控电网扰动接口。</p>
+          </article>
+          <article class="model-card">
+            <img src="docs/images/time_domain_validation.png" alt="三个时域稳定风险交叉检查工况">
+            <p>三个时域工况如实保留实际计算标签以及 2.25 s 内未稳定的结果。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="reports">
+      <div class="container">
+        <div class="boundary">
+          <h2>工程边界</h2>
+          <p>当前结果是针对本平均值仿真模型和指定运行点的相对筛查指标，不构成广义 Nyquist 正式证明、开关谐波评估、硬件验证、保护研究或并网规范审批。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <span>版权所有 © 2026 Henry Tang，保留所有权利。</span>
+      <span>未经授权不得复用、修改或再分发。<a href="https://github.com/Henry-Don/bess-frequency-scan-stability-screening">查看仓库</a></span>
+    </div>
+  </footer>
+</body>
+</html>

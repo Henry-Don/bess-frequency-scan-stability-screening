@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">Grid-following BESS control and frequency-scan architecture</title>
+  <desc id="desc">Power and DC-link commands pass through supervisory control, current limiting, dq current control and modulation. PCC measurements feed the PLL and coordinate transforms, while scan perturbations act on the grid source.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7fafc"/><stop offset="1" stop-color="#e9f2f7"/></linearGradient>
+    <linearGradient id="control" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1769aa"/><stop offset="1" stop-color="#0f4e82"/></linearGradient>
+    <linearGradient id="plant" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#008a8a"/><stop offset="1" stop-color="#006a73"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#29445e"/></marker>
+    <style>
+      .title{font:700 30px 'Segoe UI',Arial,sans-serif;fill:#10243e}.subtitle{font:400 16px 'Segoe UI',Arial,sans-serif;fill:#617083}
+      .box{rx:16;stroke-width:2}.control{fill:url(#control);stroke:#0b426f}.plant{fill:url(#plant);stroke:#005a61}.support{fill:#fff;stroke:#9bb0c2}.scan{fill:#fff5e9;stroke:#d96b27}
+      .label{font:700 18px 'Segoe UI',Arial,sans-serif;fill:#fff;text-anchor:middle}.dark{fill:#10243e}.small{font:400 14px 'Segoe UI',Arial,sans-serif;fill:#dcecf7;text-anchor:middle}.smallDark{fill:#617083}
+      .line{fill:none;stroke:#29445e;stroke-width:3;marker-end:url(#arrow)}.feedback{fill:none;stroke:#6c8296;stroke-width:2.5;stroke-dasharray:8 7;marker-end:url(#arrow)}
+      .group{fill:none;stroke:#b9c8d4;stroke-width:2;stroke-dasharray:7 7;rx:22}.groupLabel{font:700 16px 'Segoe UI',Arial,sans-serif;fill:#617083;letter-spacing:.08em}
+    </style>
+  </defs>
+  <rect width="1400" height="820" fill="url(#bg)"/>
+  <text class="title" x="70" y="62">Grid-following BESS control and scan signal flow</text>
+  <text class="subtitle" x="70" y="92">Supervisory references, constrained dq regulation, plant feedback and independent grid perturbation</text>
+
+  <rect class="group" x="50" y="130" width="970" height="360"/>
+  <text class="groupLabel" x="75" y="162">CONTROL PATH</text>
+  <rect class="box support" x="80" y="205" width="165" height="112"/>
+  <text class="label dark" x="162" y="245">P*, Q*, Vdc</text><text class="small smallDark" x="162" y="273">references and</text><text class="small smallDark" x="162" y="294">measurements</text>
+  <rect class="box control" x="300" y="205" width="190" height="112"/>
+  <text class="label" x="395" y="243">Outer loops</text><text class="small" x="395" y="270">P/Q and DC-link</text><text class="small" x="395" y="291">regulation</text>
+  <rect class="box control" x="545" y="205" width="175" height="112"/>
+  <text class="label" x="632" y="244">Current limit</text><text class="small" x="632" y="271">SoC constraints and</text><text class="small" x="632" y="292">anti-windup</text>
+  <rect class="box control" x="775" y="205" width="205" height="112"/>
+  <text class="label" x="877" y="244">dq current loops</text><text class="small" x="877" y="271">decoupling and</text><text class="small" x="877" y="292">voltage commands</text>
+  <path class="line" d="M245 261 H300"/><path class="line" d="M490 261 H545"/><path class="line" d="M720 261 H775"/>
+  <rect class="box support" x="300" y="355" width="190" height="92"/>
+  <text class="label dark" x="395" y="392">SoC supervisor</text><text class="small smallDark" x="395" y="417">charge/discharge bounds</text>
+  <path class="feedback" d="M395 355 V322"/>
+  <rect class="box support" x="775" y="355" width="205" height="92"/>
+  <text class="label dark" x="877" y="392">PLL + abc/dq</text><text class="small smallDark" x="877" y="417">angle and feedback frame</text>
+  <path class="feedback" d="M877 355 V322"/>
+
+  <rect class="group" x="1050" y="130" width="300" height="360"/>
+  <text class="groupLabel" x="1075" y="162">POWER STAGE</text>
+  <rect class="box plant" x="1080" y="205" width="240" height="112"/>
+  <text class="label" x="1200" y="244">Modulator + VSC</text><text class="small" x="1200" y="271">DC link to three-phase</text><text class="small" x="1200" y="292">AC conversion</text>
+  <rect class="box plant" x="1080" y="355" width="240" height="92"/>
+  <text class="label" x="1200" y="392">LCL filter + PCC</text><text class="small" x="1200" y="417">11 kV grid interface</text>
+  <path class="line" d="M980 261 H1080"/><path class="line" d="M1200 317 V355"/>
+
+  <rect class="group" x="50" y="535" width="1300" height="220"/>
+  <text class="groupLabel" x="75" y="567">FREQUENCY-SCAN AND FEEDBACK PATH</text>
+  <rect class="box scan" x="80" y="605" width="245" height="100"/>
+  <text class="label dark" x="202" y="643">Scan command</text><text class="small smallDark" x="202" y="670">off / d magnitude / q phase</text>
+  <rect class="box scan" x="390" y="605" width="210" height="100"/>
+  <text class="label dark" x="495" y="643">11 kV source</text><text class="small smallDark" x="495" y="670">SCR and X/R setting</text>
+  <rect class="box support" x="665" y="605" width="250" height="100"/>
+  <text class="label dark" x="790" y="643">PCC measurement</text><text class="small smallDark" x="790" y="670">vd, vq, id, iq, P and Q</text>
+  <rect class="box support" x="980" y="605" width="330" height="100"/>
+  <text class="label dark" x="1145" y="643">Tone extraction + Ydq</text><text class="small smallDark" x="1145" y="670">quality gates and interaction score</text>
+  <path class="line" d="M325 655 H390"/><path class="line" d="M600 655 H665"/><path class="line" d="M915 655 H980"/>
+  <path class="feedback" d="M790 605 V505 H1200 V447"/>
+  <path class="feedback" d="M790 605 V500 H877 V447"/>
+</svg>
