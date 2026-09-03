@@ -1,38 +1,16 @@
-name: Project Validation
+name: Full MATLAB Regression
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
 
-concurrency:
-  group: validation-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  repository-evidence:
-    name: Repository evidence
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Validate publication structure
-        run: python python/verify_repository.py
-
-  matlab-regression:
-    name: MATLAB and Simulink smoke regression
+  full-matlab-regression:
+    name: Complete 640-injection study regression
     runs-on: windows-latest
-    timeout-minutes: 60
+    timeout-minutes: 360
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -50,18 +28,17 @@ jobs:
             Simulink
             Simscape
             Simscape_Electrical
-      - name: Run real-model smoke regression
+      - name: Run all seven validation groups
         uses: matlab-actions/run-command@v2
         env:
           BESS_REFERENCE_PROJECT_ROOT: ${{ github.workspace }}\reference-project
-          BESS_VALIDATION_SCOPE: smoke
         with:
           command: run(fullfile(pwd,"tests","run_all_checks.m"))
-      - name: Upload smoke evidence
+      - name: Upload complete regression evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: smoke-evidence
+          name: full-regression-evidence
           path: |
             results/*.mat
             results/*.png

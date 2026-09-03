@@ -141,7 +141,7 @@ cd('path/to/bess-frequency-scan-stability-screening')
 run('tests/run_all_checks.m')
 ```
 
-Seven check groups cover the 10 Hz interface, fit quality, independent repeatability, baseline equivalence, the nominal 20-point scan, four-SCR interaction screening, the 16-case PLL risk map and the three time-domain cases. MATLAB static analysis reports zero findings across 42 MATLAB files in the validated revision.
+Seven check groups cover the 10 Hz interface, fit quality, independent repeatability, baseline equivalence, the nominal 20-point scan, four-SCR interaction screening, the 16-case PLL risk map and the three time-domain cases. MATLAB static analysis reports zero findings across 43 MATLAB files in the validated revision.
 
 The repository keeps the model, scripts, tests, technical notes and representative figures. Large simulation data, generated caches and compiled model artifacts remain local. Each saved scan records its frequency vector, SCR, PLL scale, quality metrics, completion state and configuration signature. This supports interrupted-run recovery and protects against silently reusing results from a different configuration.
 

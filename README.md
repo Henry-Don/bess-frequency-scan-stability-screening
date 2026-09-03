@@ -109,7 +109,7 @@ run_pll_risk_map;
 run_time_domain_validation;
 ```
 
-The repository check used by continuous validation is `python/verify_repository.py`. It verifies the publication structure and excludes generated Simulink cache files from the release surface.
+Continuous validation is deliberately layered. `.github/workflows/ci.yml` runs the repository check and a real-model smoke regression on every push and pull request. `.github/workflows/full-regression.yml` provides the complete seven-group, 640-injection regression as a manually triggered workflow with a 360-minute ceiling. The repository check is `python/verify_repository.py`; it verifies the publication structure and excludes generated Simulink cache files from the release surface.
 
 ## Representative Results
 
@@ -133,7 +133,7 @@ Case A calculates as Lower, while Cases B and C calculate as Higher. Case B was 
 
 ## Verified Results and Boundaries
 
-The complete local entry point reports 7/7 check groups passed. The independent 10 Hz repeatability check measures 0% magnitude drift and 0 degree phase drift. Nine baseline signals match the source model within the configured numerical tolerance. The validated revision also reports zero static-analysis findings across 42 MATLAB files.
+The complete local entry point reports 7/7 check groups passed. The independent 10 Hz repeatability check measures 0% magnitude drift and 0 degree phase drift. Nine baseline signals match the source model within the configured numerical tolerance. The validated revision also reports zero static-analysis findings across 43 MATLAB files.
 
 The risk levels are comparative indicators for the defined model and operating points. They do not provide a formal generalized-Nyquist stability certificate, switching-harmonic assessment, vendor-model validation, hardware result, protection-coordination study or grid-code approval.
 

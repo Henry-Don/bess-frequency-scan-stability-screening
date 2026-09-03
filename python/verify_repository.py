@@ -14,6 +14,7 @@ REQUIRED = (
     "CHANGELOG.zh-CN.md",
     "VERSION",
     ".github/workflows/ci.yml",
+    ".github/workflows/full-regression.yml",
     ".github/workflows/pages.yml",
     "config/README.md",
     "config/README.zh-CN.md",
