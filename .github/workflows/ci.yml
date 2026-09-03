@@ -36,6 +36,12 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+      - name: Check out project-one baseline reference
+        uses: actions/checkout@v4
+        with:
+          repository: Henry-Don/grid-connected-bess-control-validation
+          ref: v0.5.1
+          path: reference-project
       - name: Set up MATLAB products
         uses: matlab-actions/setup-matlab@v2
         with:
@@ -46,6 +52,8 @@ jobs:
             Simscape_Electrical
       - name: Run complete regression
         uses: matlab-actions/run-command@v2
+        env:
+          BESS_REFERENCE_PROJECT_ROOT: ${{ github.workspace }}\reference-project
         with:
           command: run(fullfile(pwd,"tests","run_all_checks.m"))
       - name: Upload regression evidence
