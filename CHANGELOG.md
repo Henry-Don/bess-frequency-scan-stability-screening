@@ -2,7 +2,7 @@
 
 **English** | [简体中文](CHANGELOG.zh-CN.md)
 
-## v1.0.0 — 2026-09-02
+## v0.6.1 — 2026-09-03
 
 - Added an isolated grid-following BESS model with controllable d-axis and q-axis perturbation interfaces.
 - Added a resumable 0.5–100 Hz, 20-point frequency-scan engine and complete `Ydd`, `Ydq`, `Yqd`, `Yqq` identification.

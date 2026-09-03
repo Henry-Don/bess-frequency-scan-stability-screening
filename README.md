@@ -13,7 +13,7 @@ Quick evidence: [live project page](https://henry-don.github.io/bess-frequency-s
 
 ## Version and Scope
 
-The prepared release is **v1.0.0**. Its validated study covers 20 logarithmically spaced frequencies from 0.5 Hz to 100 Hz, four SCR values, four PLL gain scales and separate d-axis/q-axis injections. The complete 4 x 4 operating matrix represents 640 injection simulations. All numerical thresholds are fixed before the matrix comparison.
+The prepared release is **v0.6.1**. Its validated study covers 20 logarithmically spaced frequencies from 0.5 Hz to 100 Hz, four SCR values, four PLL gain scales and separate d-axis/q-axis injections. The complete 4 x 4 operating matrix represents 640 injection simulations. All numerical thresholds are fixed before the matrix comparison.
 
 | Phase | Main entry point | Implemented content |
 | --- | --- | --- |
