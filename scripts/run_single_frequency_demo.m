@@ -3,7 +3,11 @@
 projectRoot = fileparts(fileparts(mfilename('fullpath')));
 addpath(fullfile(projectRoot, 'scripts'));
 addpath(fullfile(projectRoot, 'models'));
-run(fullfile(projectRoot, 'scripts', 'init_frequency_scan.m'));
+initializationFile = fullfile(projectRoot, 'scripts', ...
+    'init_frequency_scan.m');
+evalin('base', ['run(''' strrep(initializationFile, '''', '''''') ''')']);
+scan_cfg = evalin('base', 'scan_cfg');
+frequency_scan_model = evalin('base', 'frequency_scan_model');
 demoTiming = frequency_scan_timing(scan_cfg, scan_cfg.test_frequency_Hz);
 
 resultsFolder = fullfile(projectRoot, 'results');
