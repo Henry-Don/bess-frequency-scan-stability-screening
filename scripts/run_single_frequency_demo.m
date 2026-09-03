@@ -11,9 +11,12 @@ if ~isfolder(resultsFolder)
     mkdir(resultsFolder);
 end
 
-baselineOut = sim(make_frequency_scan_input('off', scan_cfg.test_frequency_Hz, false));
-dAxisOut = sim(make_frequency_scan_input('d', scan_cfg.test_frequency_Hz, true));
-qAxisOut = sim(make_frequency_scan_input('q', scan_cfg.test_frequency_Hz, true));
+baselineOut = sim(make_frequency_scan_input('off', ...
+    scan_cfg.test_frequency_Hz, false, scan_cfg, frequency_scan_model));
+dAxisOut = sim(make_frequency_scan_input('d', ...
+    scan_cfg.test_frequency_Hz, true, scan_cfg, frequency_scan_model));
+qAxisOut = sim(make_frequency_scan_input('q', ...
+    scan_cfg.test_frequency_Hz, true, scan_cfg, frequency_scan_model));
 
 phase1_result = struct();
 phase1_result.configuration = scan_cfg;
