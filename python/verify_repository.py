@@ -25,6 +25,7 @@ REQUIRED = (
     "scripts/run_scr_interaction_scan.m",
     "scripts/run_pll_risk_map.m",
     "scripts/run_time_domain_validation.m",
+    "scripts/generate_portfolio_media.m",
     "tests/run_all_checks.m",
     "python/verify_repository.py",
     "site/index.html",
@@ -46,6 +47,9 @@ REQUIRED = (
     "docs/images/dq_admittance_response.png",
     "docs/images/pll_scr_risk_map.png",
     "docs/images/time_domain_validation.png",
+    "docs/media/bess_demo_poster.png",
+    "docs/media/bess_demo.gif",
+    "docs/media/bess_demo.mp4",
     "tools/package_release.ps1",
 )
 
@@ -74,6 +78,8 @@ def published_files() -> list[Path]:
 
 def main() -> int:
     missing = [name for name in REQUIRED if not (ROOT / name).is_file()]
+    version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+    version_issue = version != "v0.6.1"
     unwanted = []
     for path in published_files():
         relative = path.relative_to(ROOT)
@@ -88,8 +94,10 @@ def main() -> int:
     if unwanted:
         print("Generated files must not be published:")
         print("\n".join(f"  - {name}" for name in sorted(set(unwanted))))
+    if version_issue:
+        print(f"Unexpected VERSION: {version}")
 
-    if missing or unwanted:
+    if missing or unwanted or version_issue:
         return 1
 
     print(f"Repository structure check passed: {len(REQUIRED)} required files")

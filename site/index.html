@@ -7,7 +7,7 @@
   <meta name="description" content="Automated dq admittance identification and weak-grid stability-risk screening for a grid-following BESS in MATLAB and Simulink.">
   <meta property="og:title" content="BESS Frequency Scan and Weak-Grid Screening">
   <meta property="og:description" content="A repeatable 20-point dq scan, 4 x 4 SCR-PLL risk map and time-domain cross-check.">
-  <meta property="og:image" content="docs/images/pll_scr_risk_map.png">
+  <meta property="og:image" content="docs/media/bess_demo_poster.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -59,24 +59,27 @@
     <section>
       <div class="container">
         <div class="section-heading">
-          <p class="eyebrow">Main study result</p>
-          <h2>Grid strength and PLL sensitivity in one reviewable map</h2>
-          <p>The matrix preserves the calculated risk score and critical interaction frequency for every operating point.</p>
+          <p class="eyebrow">Short demonstration</p>
+          <h2>Model, frequency response and stability-screening evidence</h2>
+          <p>The silent demonstration uses the exported Simulink model and recorded project plots.</p>
         </div>
         <div class="demo-grid">
           <div class="media-frame">
-            <img src="docs/images/pll_scr_risk_map.png" alt="SCR and PLL relative-risk map with critical frequencies">
+            <video controls preload="metadata" poster="docs/media/bess_demo_poster.png">
+              <source src="docs/media/bess_demo.mp4" type="video/mp4">
+              Your browser does not support embedded video.
+            </video>
           </div>
           <aside class="demo-copy">
-            <h3>Included evidence</h3>
+            <h3>Included sequence</h3>
             <ul>
-              <li>20 frequencies from 0.5 Hz to 100 Hz</li>
-              <li>Separate d-axis and q-axis injections</li>
+              <li>Saved frequency-scan Simulink model</li>
+              <li>Single-frequency dq identification</li>
               <li>Complete 2 x 2 dq admittance</li>
-              <li>Four SCR and four PLL settings</li>
-              <li>Fit, repeatability and baseline checks</li>
+              <li>SCR interaction and PLL sensitivity</li>
+              <li>Time-domain cross-check and evidence summary</li>
             </ul>
-            <a class="text-link" href="docs/images/dq_admittance_response.png">Open the dq response →</a>
+            <a class="text-link" href="docs/media/bess_demo.gif">Open compact GIF →</a>
           </aside>
         </div>
       </div>

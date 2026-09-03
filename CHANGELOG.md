@@ -10,8 +10,10 @@
 - Added three time-domain cross-check cases with overshoot, dominant-frequency, decay-ratio and settling metrics.
 - Added fixed fit-quality gates, independent 10 Hz repeatability and nine-signal baseline equivalence checks.
 - Added bilingual README editions, technical guides, verification summaries, model descriptions and release notes.
-- Added a bilingual project page, exported model view, architecture diagrams and representative result images.
-- Added continuous repository checks, Pages deployment and local release-package generation.
+- Added a bilingual project page, architecture diagrams and representative result images.
+- Added a presentation-quality model image, compact GIF, higher-quality MP4 and poster generated from the saved model and recorded plots.
+- Added automated repository-evidence checks and full R2024b MATLAB/Simulink regression workflow.
+- Added Pages deployment and local release-package generation with a SHA-256 checksum.
 
 ## v0.6.0 — 2026-09-01
 

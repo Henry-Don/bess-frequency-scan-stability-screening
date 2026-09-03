@@ -54,14 +54,15 @@
 | 必需建模产品 | Simulink、Simscape、Simscape Electrical | R2024b 产品 |
 | Python | Python 3.10 或更高版本；仓库检查仅使用标准库 | 兼容 Python 3.11 |
 | 操作系统 | MATLAB 支持的桌面操作系统；脚本使用仓库相对路径 | Windows 11 |
+| 可选媒体生成 | Image Processing Toolbox、Computer Vision Toolbox | R2024b 产品 |
 
-模型属于平均值系统研究，不需要开关器件模型或厂商专用控制库。
+模型属于平均值系统研究，不需要开关器件模型或厂商专用控制库。可选产品只用于 `generate_portfolio_media.m`，模型运行不依赖它们。
 
-## 在线项目页与技术说明
+## 在线报告与演示
 
-![PLL 与 SCR 相对风险地图](docs/images/pll_scr_risk_map.png)
+![项目短演示](docs/media/bess_demo.gif)
 
-[在线项目页](https://henry-don.github.io/bess-frequency-scan-stability-screening/)集中展示架构、模型视图、主要图表和工程边界。详细说明提供中英文版本：
+同一演示另提供画质更高的 [MP4 视频](docs/media/bess_demo.mp4)。[在线项目页](https://henry-don.github.io/bess-frequency-scan-stability-screening/)集中展示架构、模型视图、主要图表和工程边界。详细说明提供中英文版本：
 
 - [英文技术说明](docs/project_technical_guide.pdf)
 - [中文技术说明](docs/project_technical_guide.zh-CN.pdf)

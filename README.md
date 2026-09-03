@@ -54,14 +54,15 @@ The image is exported from the saved `models/bess_frequency_scan.slx` file. The 
 | Required modelling products | Simulink, Simscape and Simscape Electrical | R2024b products |
 | Python | Python 3.10 or later; standard library only for repository checks | Python 3.11 compatible |
 | Operating system | MATLAB-compatible desktop OS; scripts use repository-relative paths | Windows 11 |
+| Optional media generation | Image Processing Toolbox and Computer Vision Toolbox | R2024b products |
 
-The model is an average-value system study. No switching-device model or vendor-specific control library is required.
+The model is an average-value system study. No switching-device model or vendor-specific control library is required. The optional products are used only by `generate_portfolio_media.m`, not by model execution.
 
-## Project Page and Technical Notes
+## Live Reports and Demo
 
-![PLL and SCR relative-risk map](docs/images/pll_scr_risk_map.png)
+![Short project demonstration](docs/media/bess_demo.gif)
 
-The [project page](https://henry-don.github.io/bess-frequency-scan-stability-screening/) presents the architecture, model view, main plots and engineering boundary. Detailed notes are available in both languages:
+The same demonstration is available as a higher-quality [MP4 video](docs/media/bess_demo.mp4). The [project page](https://henry-don.github.io/bess-frequency-scan-stability-screening/) presents the architecture, model view, main plots and engineering boundary. Detailed notes are available in both languages:
 
 - [English technical guide](docs/project_technical_guide.pdf)
 - [Chinese technical guide](docs/project_technical_guide.zh-CN.pdf)
